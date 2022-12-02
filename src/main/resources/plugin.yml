@@ -1,0 +1,7 @@
+name: CustomMobDrops
+version: '${version}'
+main: ro.cofi.custommobdrops.CustomMobDrops
+api-version: 1.19
+prefix: cmdrops
+authors: [ Deathcofi ]
+description: A PaperMC plugin to provide customizable and conditioned mob drops through JSON
