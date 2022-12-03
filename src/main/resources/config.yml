@@ -1,0 +1,71 @@
+enabled: true # Enable or disable the ENTIRE plugin
+mobs:
+  - id: "minecraft:ender_dragon" # The "minecraft:" prefix is optional
+    enabled: false # Enable or disable this plugin's influence on the mob
+    overwrite: false # Overwrite the default drops of the mob
+    conditions: # These conditions activate the profile
+      name: "Ender Dragon"
+      world: "world_the_end"
+      tag: "ender_dragon"
+    drops:
+      mode: "weight" # chance, weight
+      items:
+        - id: "minecraft:ender_pearl"
+          weight: 20
+          amount: # defaults to 1
+            min: 1
+            max: 3
+        - id: "minecraft:dragon_egg"
+          weight: 50
+          amount:
+            min: 1
+            max: 1
+          custom-name: "&6Dragon Egg"
+          lore:
+            - "&7A dragon egg"
+            - "&7dropped by"
+            - "&7the Ender Dragon"
+          enchants:
+            - id: "minecraft:knockback"
+              level: 2
+        - id: "minecraft:diamond_sword"
+          weight: 10
+          durability:
+            type: "percent" # flat or percent
+            min: 70
+            max: 80
+  - id: ["minecraft:pig", "minecraft:sheep"] # Can also use lists, creating multiple profiles with the same settings
+    enabled: false
+    overwrite: true
+    conditions: # an AND is applied
+      - or:
+        - name: "Frank"
+        - name: "Bob"
+      - not:
+        - name: "Alex"
+        - and:
+            - tag: "custom"
+            - tag: "owned"
+      - on_fire: false # Must NOT be on fire. If unspecified, the condition is ignored
+    drops:
+      mode: "chance" # each group has a chance to be triggered
+      items:
+        - group:
+          mode: "weight"
+          items:
+            - id: "minecraft:apple"
+              weight: 20
+              amount:
+                min: 1
+                max: 3
+            - id: "minecraft:golden_apple"
+              weight: 10
+          chance: 0.5 # The chance for the group to trigger for an attempt
+          rolls: # The number of times this group will be attempted
+            min: 1
+            max: 2
+        - id: "minecraft:blaze_powder"
+          chance: 0.1
+          conditions: # These conditions are applied only to this drop
+            name: "Bob" # Will not work for Frank
+            on_fire: true
