@@ -4,9 +4,9 @@ mobs:
     enabled: false # Enable or disable this plugin's influence on the mob
     overwrite: false # Overwrite the default drops of the mob
     conditions: # These conditions activate the profile
-      name: "Ender Dragon"
-      world: "world_the_end"
-      tag: "ender_dragon"
+      - name: "Ender Dragon"
+      - world: "world_the_end"
+      - tag: "ender_dragon"
     drops:
       mode: "weight" # chance, weight
       items:
@@ -41,17 +41,18 @@ mobs:
       - or:
         - name: "Frank"
         - name: "Bob"
-      - not:
+      - not: # only the first condition will be negated
         - name: "Alex"
+        - name: "unused_condition" # redundant
+      - not: # the entity should NOT have both tags
         - and:
-            - tag: "custom"
-            - tag: "owned"
+          - tag: "custom"
+          - tag: "owned"
       - on_fire: false # Must NOT be on fire. If unspecified, the condition is ignored
     drops:
-      mode: "chance" # each group has a chance to be triggered
+      mode: "chance" # each group has a chance to be triggered, weights are used as percentages
       items:
-        - group:
-          mode: "weight"
+        - mode: "weight"
           items:
             - id: "minecraft:apple"
               weight: 20
@@ -59,13 +60,14 @@ mobs:
                 min: 1
                 max: 3
             - id: "minecraft:golden_apple"
+              enabled: false # You can also disable individual items, useful for debugging
               weight: 10
-          chance: 0.5 # The chance for the group to trigger for an attempt
+          weight: 50 # The chance for the group to trigger for an attempt, 50%
           rolls: # The number of times this group will be attempted
             min: 1
             max: 2
         - id: "minecraft:blaze_powder"
-          chance: 0.1
+          weight: 10
           conditions: # These conditions are applied only to this drop
             name: "Bob" # Will not work for Frank
             on_fire: true

@@ -5,6 +5,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import ro.cofi.custommobdrops.config.ConfigManager;
+import ro.cofi.custommobdrops.listener.EntityDeathListener;
 
 import java.util.Arrays;
 import java.util.function.Function;
@@ -32,16 +33,11 @@ public final class CustomMobDrops extends JavaPlugin {
 
         // register listeners
         Arrays.<Function<CustomMobDrops, ? extends Listener>>asList(
-
+            EntityDeathListener::new
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener.apply(this), this));
 
         // register commands
 //        Objects.requireNonNull(getServer().getPluginCommand("nrreload")).setExecutor(new ReloadCommand(this));
-    }
-
-    @Override
-    public void onDisable() {
-        configManager.saveConfig();
     }
 
     public static CustomMobDrops getPlugin() {
